@@ -17,7 +17,6 @@ async def get_movies():
         votes = 0
         karma = False
         for reaction in message.reactions:
-            print(reaction)
             if str(reaction.emoji) == '✅':
                 skip = True
             if str(reaction.emoji) == '👍':
@@ -29,15 +28,12 @@ async def get_movies():
             if votes not in movies.keys():
                 movies[votes] = {}
             movies[votes][message.id] = {'movie': message.content, 'karma': karma}
-            print(movies)
     return movies
 
 async def pick_movies(channel, movies, count):
     movie_channel = client.get_channel(cfg.movie_channel)
     vote_counts = list(movies.keys())
     pick = 0
-    print(count)
-    print(movies)
     while pick < count:
         pick += 1
         most_votes = max(vote_counts)

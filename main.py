@@ -35,10 +35,17 @@ async def pick_movies(channel, movies, count):
     vote_counts = list(movies.keys())
     pick = 0
     while pick < count:
+        choice = None
         pick += 1
         most_votes = max(vote_counts)
         candidates = movies[most_votes]
-        choice = random.choice(list(candidates.keys()))
+        keys = list(candidates.keys())
+        random.shuffle(keys)
+        for key in keys:
+            if candidates[key]['karma']:
+                choice = key
+        if not choice:
+            choice = random.choice(list(candidates.keys()))
         message_link = "https://discord.com/channels/" + \
                        str(channel.guild.id) + '/' + str(movie_channel.id) + '/' + str(choice)
         embed = Embed()
